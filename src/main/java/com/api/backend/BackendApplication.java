@@ -28,6 +28,7 @@ public class BackendApplication {
     @Bean
     CommandLineRunner seeder(CiudadRepository ciudadRepository, PermisoRepository permisoRepo, RolRepository rolRepo, UsuarioRepository usuarioRepo, PasswordEncoder encoder) {
         return args -> {
+            System.out.println("--------------------------------------------HOLA RAILWAY--------------------------------------------");
             //ciudades
             if (ciudadRepository.findAll().isEmpty()){
                 for (CiudadesEnum ciudadEnum : CiudadesEnum.values()) {
