@@ -35,35 +35,35 @@ public class DataSeeder implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
         if (avionRepository.count() == 0) {
-            log.info("🌱 Iniciando seeder de datos...");
+            log.info("Iniciando seeder de datos.");
 
             // 1. Crear usuarios (sin cambios respecto a tu código)
             List<Usuario> usuarios = crearUsuarios();
-            log.info("✅ Usuarios creados: {}", usuarios.size());
+            log.info("Usuarios creados: {}", usuarios.size());
 
             // 2. Crear aviones (sin cambios respecto a tu código)
             List<Avion> aviones = crearAviones();
-            log.info("✅ Aviones creados: {}", aviones.size());
+            log.info("Aviones creados: {}", aviones.size());
 
             // 3. Crear asientos para cada avión (sin cambios respecto a tu código)
             crearAsientos(aviones);
-            log.info("✅ Asientos creados para todos los aviones");
+            log.info("Asientos creados para todos los aviones");
 
             // 4. Crear vuelos (sin cambios respecto a tu código - ya genera pares)
             List<Vuelo> vuelos = crearVuelos(aviones);
-            log.info("✅ Vuelos creados: {}", vuelos.size());
+            log.info("Vuelos creados: {}", vuelos.size());
 
             // 5. Crear asientos_vuelo (sin cambios respecto a tu código)
             crearAsientosVuelo(vuelos);
-            log.info("✅ AsientosVuelo creados para todos los vuelos");
+            log.info("AsientosVuelo creados para todos los vuelos");
 
             // 6. --- MODIFICACIÓN AQUÍ: Crear reservas incluyendo ida y vuelta ---
             crearReservasCompletas(usuarios, vuelos);
-            log.info("✅ Reservas completas creadas");
+            log.info("Reservas completas creadas");
 
-            log.info("🎉 Seeder completado exitosamente!");
+            log.info("Seeder completado exitosamente!");
         } else {
-            log.info("⏭️  Base de datos ya contiene datos, saltando seeder");
+            log.info("Base de datos ya contiene datos, saltando seeder");
         }
     }
 
@@ -286,7 +286,7 @@ public class DataSeeder implements CommandLineRunner {
     private void crearReservasCompletas(List<Usuario> usuarios, List<Vuelo> vuelos) {
         // Asegúrate de tener suficientes vuelos creados
         if (vuelos.size() < 12) { // Ajusta este número según los pares que necesites
-            log.error("❌ No hay suficientes vuelos definidos en crearVuelos() para el seeder de reservas ida y vuelta.");
+            log.error("No hay suficientes vuelos definidos en crearVuelos() para el seeder de reservas ida y vuelta.");
             return;
         }
 
@@ -308,7 +308,7 @@ public class DataSeeder implements CommandLineRunner {
     // --- MODIFICACIÓN AQUÍ: Método adaptado para aceptar List<Vuelo> ---
     private void crearReservaCompleta(Usuario usuario, List<Vuelo> vuelosSeleccionados, int numPasajeros, boolean conInfante) {
         if (vuelosSeleccionados == null || vuelosSeleccionados.isEmpty()) {
-            log.error("❌ No se proporcionaron vuelos para la reserva del usuario {}", usuario.getEmail());
+            log.error("No se proporcionaron vuelos para la reserva del usuario {}", usuario.getEmail());
             return;
         }
 
@@ -392,7 +392,7 @@ public class DataSeeder implements CommandLineRunner {
 
             // Validar si hay suficientes asientos para este vuelo
             if (asientosDisponiblesEsteVuelo.size() < numPasajeros) {
-                log.warn("⚠️ No hay suficientes asientos ({}) para {} pasajeros en el vuelo ID {} ({} -> {}). Saltando tiquetes para este vuelo.",
+                log.warn("⚠No hay suficientes asientos ({}) para {} pasajeros en el vuelo ID {} ({} -> {}). Saltando tiquetes para este vuelo.",
                         asientosDisponiblesEsteVuelo.size(), numPasajeros, vueloActual.getIdVuelo(), vueloActual.getOrigen(), vueloActual.getDestino());
                 continue; // Salta al siguiente vuelo si no hay asientos
             }
@@ -428,7 +428,7 @@ public class DataSeeder implements CommandLineRunner {
         // reserva.setTiquetes(tiquetesGenerados); // Descomentar si tienes mapeo bidireccional ManyToOne en Tiquete
         // reservaRepository.save(reserva);
 
-        log.info("✅ Reserva completa creada: Código {}, Usuario {}, {} Vuelos, {} Pasajeros -> {} Tiquetes generados",
+        log.info("Reserva completa creada: Código {}, Usuario {}, {} Vuelos, {} Pasajeros -> {} Tiquetes generados",
                 reserva.getCodigoReserva(), usuario.getEmail(), vuelosSeleccionados.size(), numPasajeros, tiquetesGenerados.size());
     }
 
@@ -451,7 +451,7 @@ public class DataSeeder implements CommandLineRunner {
         return pagoTiquete;
     }
 
-    // --- generarCodigoReserva MANTIENES TU MÉTODO EXISTENTE ---
+    // --- generarCodigoReserva ---
     private String generarCodigoReserva() {
         String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder codigo = new StringBuilder();

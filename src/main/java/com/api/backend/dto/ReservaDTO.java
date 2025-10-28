@@ -16,11 +16,11 @@ public class ReservaDTO {
 
     private LocalDateTime fecha;
 
-    private Pago pago;
+    private PagoDTO pago;
 
-    private List<Pasajero> pasajeros;
+    private List<PasajeroDTO> pasajeros;
 
-    private List<Tiquete> tiquetes;
+    private List<TiqueteDTO> tiquetes;
 
     private String codigoReserva;
 }

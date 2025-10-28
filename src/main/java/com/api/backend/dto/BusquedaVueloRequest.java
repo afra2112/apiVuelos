@@ -21,7 +21,7 @@ public class BusquedaVueloRequest {
 
     private LocalDate fechaRegreso; // Opcional para ida y vuelta
 
-    @NotNull(message = "La fecha de salida es obligatoria")
+    @NotNull(message = "El tipo de viaje es obligatorio") // ida o ida y vuelta
     private String tipoViaje;
 
     // Filtros opcionales

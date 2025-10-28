@@ -3,8 +3,10 @@ package com.api.backend.implement;
 import com.api.backend.config.VueloMapper;
 import com.api.backend.dto.BusquedaVueloRequest;
 import com.api.backend.dto.BusquedaVueloResponse;
+import com.api.backend.dto.CrearVuelo;
 import com.api.backend.dto.VueloDTO;
 import com.api.backend.entity.Vuelo;
+import com.api.backend.repository.AvionRepository;
 import com.api.backend.repository.VueloRepository;
 import com.api.backend.service.VueloService;
 import com.api.backend.speficication.VueloSpecification;
@@ -33,6 +35,9 @@ public class VueloImplement implements VueloService {
 
     @Autowired
     private VueloMapper vueloMapper;
+
+    @Autowired
+    private AvionRepository avionRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -118,6 +123,13 @@ public class VueloImplement implements VueloService {
         return request.getFechaSalida() != null &&
                !request.getFechaSalida().isBefore(hoy) &&
                !request.getFechaSalida().isAfter(maxFecha);
+    }
+
+    @Override
+    public VueloDTO crearVuelo(CrearVuelo crearVuelo) {
+        Vuelo vuelo = modelMapper.map(crearVuelo, Vuelo.class);
+        vuelo.setAvion(avionRepository.findById(crearVuelo.getIdAvion()).orElseThrow());
+        return modelMapper.map(vueloRepository.save(vuelo), VueloDTO.class);
     }
 
     private VueloDTO convertirAVueloDTO(Vuelo vuelo) {

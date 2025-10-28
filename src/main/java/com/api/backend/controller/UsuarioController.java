@@ -4,7 +4,6 @@ import com.api.backend.dto.UsuarioDTO;
 import com.api.backend.entity.Usuario;
 import com.api.backend.repository.UsuarioRepository;
 import com.api.backend.service.UsuarioService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.http.ResponseEntity;

@@ -21,11 +21,8 @@ public class VueloController {
     @Autowired
     private AsientoVueloService asientoVueloService;
 
-    /**
-     * RF01 - Búsqueda de Vuelos
-     * Permite buscar vuelos disponibles según criterios de búsqueda
-     */
-    @PostMapping("/buscar")
+    //filtrar vuelos mediante un specification con criteria builder
+    @PostMapping("/filtrar")
     // CAMBIAR TIPO DE RETORNO
     public ResponseEntity<BusquedaVueloResponse> buscarVuelos(@RequestBody @Valid BusquedaVueloRequest request) {
         try {
@@ -37,9 +34,7 @@ public class VueloController {
         }
     }
 
-    /**
-     * RF02.2 - Obtener asientos disponibles para un vuelo
-     */
+    //asientos disponibles para un vuelo
     @GetMapping("/{idVuelo}/asientos")
     public ResponseEntity<List<AsientoVueloDTO>> obtenerAsientosDisponibles(@PathVariable Long idVuelo) {
         try {
@@ -50,9 +45,8 @@ public class VueloController {
         }
     }
 
-    /**
-     * RF02.2 - Seleccionar asiento para un vuelo
-     */
+
+    //RF02.2 - Seleccionar asiento para un vuelo
     @PostMapping("/seleccionar-asiento")
     public ResponseEntity<?> seleccionarAsiento(@RequestBody @Valid SeleccionAsientoRequest request) {
         try {
@@ -64,9 +58,19 @@ public class VueloController {
         }
     }
 
-    /**
-     * Obtener vuelo por ID
-     */
+
+    // para admins
+    @PostMapping("/")
+    public ResponseEntity<?> crearVuelo(@RequestBody @Valid CrearVuelo crearVuelo) {
+        try {
+            return ResponseEntity.ok(vueloService.crearVuelo(crearVuelo));
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<VueloDTO> obtenerVueloPorId(@PathVariable Long id) {
         try {
@@ -77,15 +81,15 @@ public class VueloController {
         }
     }
 
+    // listar todos los vuelos de hoy en adelante
     @GetMapping("/disponibles")
     public ResponseEntity<List<VueloDTO>> listarVuelosFuturos() {
         List<VueloDTO> vuelos = vueloService.listarVuelosFuturos();
         return ResponseEntity.ok(vuelos);
     }
 
-    /**
-     * Listar todos los vuelos (para módulo administrativo)
-     */
+
+    // Listar todos los vuelos (para modulo administrativo)
     @GetMapping("/")
     public ResponseEntity<List<VueloDTO>> listarTodos() {
         List<VueloDTO> vuelos = vueloService.listarTodos();
