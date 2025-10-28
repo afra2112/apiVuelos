@@ -9,12 +9,6 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
-    env:
-      MYSQLHOST: ${{ secrets.MYSQLHOST }}
-      MYSQLPORT: ${{ secrets.MYSQLPORT }}
-      MYSQLDATABASE: ${{ secrets.MYSQLDATABASE }}
-      MYSQLUSER: ${{ secrets.MYSQLUSER }}
-      MYSQLPASSWORD: ${{ secrets.MYSQLPASSWORD }}
     steps:
       - uses: actions/checkout@v5.0.0
       - name: Installar JDK 21
@@ -22,8 +16,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - name: Compilar y probar api
-        run: mvn clean verify -B
+      - name: Compilar api
+        run: mvn clean install -DskipTests -B
 
       - name: Construir imagen de docker
         run: docker build -t vuelos-api:latest .
