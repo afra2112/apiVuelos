@@ -31,6 +31,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/api/vuelos/").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.POST, "/api/vuelos/").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/api/reservas/").hasRole("ADMIN");
                     auth.anyRequest().permitAll();
                 })
                 .addFilterBefore(new JwtTokenFilter(jwtUtils), BasicAuthenticationFilter.class)
