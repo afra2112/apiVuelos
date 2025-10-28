@@ -35,13 +35,11 @@ jobs:
   desplegar-en-railway-con-docker:
     needs: construir-y-pushear
     runs-on: ubuntu-latest
+    container: ghcr.io/railwayapp/cli:latest
+    env:
+      RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
     steps:
-      - name: Instalar Railway CLI
-        run: curl -sSL https://railway.app/install.sh | sh
-
-      - name: Loguear Railway
-        run: railway login --ci ${{ secrets.RAILWAY_API_KEY }}
-
+      - uses: actions/checkout@v5.0.0
       - name: Desplegar imagen en Railway
         run: |
           railway up --docker-image ${{ secrets.DOCKERHUB_USERNAME }}/vuelos-api:latest --detach
