@@ -33,7 +33,7 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/vuelos-api:latest
 
   desplegar-en-railway-con-docker:
-    needs: build-and-push
+    needs: construir-y-pushear
     runs-on: ubuntu-latest
     steps:
       - name: Instalar Railway CLI
