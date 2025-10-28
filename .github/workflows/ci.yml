@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  construir y pushear:
+  construir-y-pushear:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5.0.0
@@ -32,7 +32,7 @@ jobs:
           docker tag vuelos-api:latest ${{ secrets.DOCKERHUB_USERNAME }}/vuelos-api:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/vuelos-api:latest
 
-  desplegar en railway con docker:
+  desplegar-en-railway-con-docker:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
