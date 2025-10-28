@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  build-and-push:
+  construir y pushear:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5.0.0
@@ -32,7 +32,7 @@ jobs:
           docker tag vuelos-api:latest ${{ secrets.DOCKERHUB_USERNAME }}/vuelos-api:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/vuelos-api:latest
 
-  deploy-to-railway:
+  desplegar en railway con docker:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
@@ -40,7 +40,7 @@ jobs:
         run: curl -sSL https://railway.app/install.sh | sh
 
       - name: Loguear Railway
-        run: railway login --apiKey ${{ secrets.RAILWAY_API_KEY }}
+        run: railway login --ci ${{ secrets.RAILWAY_API_KEY }}
 
       - name: Desplegar imagen en Railway
         run: |
